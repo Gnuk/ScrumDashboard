@@ -118,15 +118,16 @@ public class ProjetTest {
 	public void testVerifierRAFNull() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
-		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
-		UserStory story2 = new UserStory("refonte du tunnel d'achat bis", 40);
+		UserStory story = new UserStory("refonte du tunnel d'achat", 10);
+		UserStory story2 = new UserStory("refonte de l'ergonomie en responsive design", 40);
 
 		p.ajouterStory(story);
 		p.ajouterStory(story2);
 
-		story.setResteAFaire(0);
+		story.setEtatUserStory(EtatUserStory.NOUVELLE);
 		assertTrue(p.getEtat() == Etat.OUVERT);
 		story2.setResteAFaire(0);
+		System.out.println(p.calculerAvancement());
 		assertTrue(p.getEtat() == Etat.FERME);
 
 	}
@@ -175,5 +176,45 @@ public class ProjetTest {
 		
 		story3.setEtatUserStory(EtatUserStory.FERMEE);		
 		assertTrue(p.calculerChargeTotale() == 40);
+	}
+	
+	/**
+	 * Test qui verifie qu'il n'y ait pas de memory leak (observer bien supprimé)
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testSupprimerStoryObserver() throws Exception {
+		Projet p = new Projet("refonte de l'interface graphique", 400f);
+
+		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
+
+		p.ajouterStory(story);
+
+		int nbObs = story.countObservers();
+		
+		p.supprimerStory(story);
+		
+		assertTrue(nbObs -1 == story.countObservers());
+	}
+	
+	/**
+	 * Test qui verifie la suppression d'une story (story bien supprimée)
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testSupprimerStoryNormale() throws Exception {
+		Projet p = new Projet("refonte de l'interface graphique", 400f);
+
+		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
+
+		p.ajouterStory(story);
+		
+		int nbStories = p.getStories().size();
+		
+		p.supprimerStory(story);
+		
+		assertTrue(nbStories -1 == p.getStories().size());
 	}
 }

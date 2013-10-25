@@ -48,6 +48,15 @@ public class Projet implements Observer {
 			throw new IllegalArgumentException(
 					"Le nom de la story est déjà attribué");
 	}
+	
+	/**
+	 * Retire la story de la liste et supprime ses observers
+	 * @param story
+	 */
+	public void supprimerStory(UserStory story) {
+		this.stories.remove(story);
+		story.deleteObservers();
+	}
 
 	/**
 	 * Calcul de l'avancement total du projet
@@ -57,7 +66,9 @@ public class Projet implements Observer {
 		double avancement = 0f;
 
 		for (UserStory story : stories) {
-			avancement += story.getResteAFaire();
+			// On ne compte que les story PLANIFIEE
+			if (story.getEtatUserStory() == EtatUserStory.PLANIFIEE)
+				avancement += story.getResteAFaire();
 		}
 
 		return avancement;
