@@ -23,12 +23,12 @@ public class UserStoryTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNomNull() throws IllegalArgumentException {
+	public void testNomNull() throws Exception {
 		UserStory us = new UserStory(null, 40);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNomVide() throws IllegalArgumentException {
+	public void testNomVide() throws Exception {
 		UserStory us = new UserStory(null, 40);
 	}
 
@@ -38,5 +38,20 @@ public class UserStoryTest {
 				40);
 		assertTrue(us.getCharge() == us.getResteAFaire());
 	}
-
+	
+	@Test
+	public void changeRAFUsPlanifiee() throws Exception {
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 40);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
+		us.setResteAFaire(0);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.FERMEE);
+	}
+	
+	@Test
+	public void changeRAFUsNouvelle() throws Exception {
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 0);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
+		us.setResteAFaire(10);
+		assertTrue(us.getResteAFaire() == 0);
+	}
 }

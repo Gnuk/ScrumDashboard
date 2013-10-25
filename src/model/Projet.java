@@ -45,6 +45,16 @@ public class Projet implements Observer{
 		
 		return avancement;
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		verifierRAF();
+	}
+
+	public void verifierRAF(){
+		if(this.calculerAvancement() == 0)
+			this.setEtat(Etat.FERME);
+	}
 	
 	/**** PRIVATE ****/
 	
@@ -86,15 +96,5 @@ public class Projet implements Observer{
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
-	}
-
-	public void verifierRAF(){
-		if(this.calculerAvancement() == 0)
-			this.setEtat(Etat.FERME);
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		verifierRAF();
 	}
 }
