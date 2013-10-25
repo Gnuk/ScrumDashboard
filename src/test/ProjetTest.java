@@ -58,13 +58,13 @@ public class ProjetTest {
 		int nbStories = p.getStories().size();
 		
 		p.ajouterStory(story);
-	
+
 		assertTrue(nbStories+1 == p.getStories().size());
 		assertEquals(story, p.getStories().get(0));
 	}
 
 	/**
-	 * Test ajouterStory dans les conditions normales
+	 * Test ajouterStory avec doublons
 	 * 
 	 * @throws Exception
 	 */
@@ -125,4 +125,6 @@ public class ProjetTest {
 		story2.setResteAFaire(0);
 		assertTrue(p.getEtat() == Etat.FERME);
 	}
+	
+	// Calculer charge totale
 }
