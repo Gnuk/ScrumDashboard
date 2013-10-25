@@ -82,7 +82,6 @@ public class ProjetTest {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(expected = IllegalArgumentException.class)
 	public void fermerProjetRAFNull() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 		
