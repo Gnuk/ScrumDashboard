@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.UserStory.EtatUserStory;
+
 public class Projet implements Observer{
 
 	public enum Etat {
@@ -29,6 +31,8 @@ public class Projet implements Observer{
 	
 	public void ajouterStory(UserStory story) {
 		if (!isStoryAlreadyExisting(story)){
+			if ( calculerChargeTotale() + story.getCharge() > budget )
+				story.setEtatUserStory(EtatUserStory.NOUVELLE);
 			this.stories.add(story);
 			story.addObserver(this);
 		}
@@ -44,6 +48,27 @@ public class Projet implements Observer{
 		}
 		
 		return avancement;
+	}
+	
+	public double calculerChargeTotale() {
+		double charge = 0f;
+		
+		for (UserStory story : stories) {
+			if ( story.getEtatUserStory() == EtatUserStory.PLANIFIEE)
+				charge += story.getCharge();
+		}
+		
+		return charge;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		verifierRAF();
+	}
+
+	public void verifierRAF(){
+		if(this.calculerAvancement() == 0)
+			this.setEtat(Etat.FERME);
 	}
 	
 	/**** PRIVATE ****/
@@ -86,15 +111,5 @@ public class Projet implements Observer{
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
-	}
-
-	public void verifierRAF(){
-		if(this.calculerAvancement() == 0)
-			this.setEtat(Etat.FERME);
-	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		verifierRAF();
 	}
 }
