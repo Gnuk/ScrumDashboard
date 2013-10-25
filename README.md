@@ -3,7 +3,7 @@
 TP sur les Tests (Master 2 STIC INFO)
 Outil de planification d'User Stories (Scrum)
 
-## Memnbres
+## Membres
 
 * Anthony AVET
 * Hugo CHIAVENUTO
