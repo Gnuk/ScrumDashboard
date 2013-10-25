@@ -28,13 +28,22 @@ public class Projet implements Observer{
 	}
 	
 	public void ajouterStory(UserStory story) {
-		// pas de doublon
 		if (!isStoryAlreadyExisting(story)){
-			story.addObserver(this);
 			this.stories.add(story);
+			story.addObserver(this);
 		}
 		else
 			throw new IllegalArgumentException("Le nom de la story est déjà attribué");
+	}
+	
+	public double calculerAvancement() {
+		double avancement = 0f;
+		
+		for (UserStory story : stories) {
+			avancement += story.getResteAFaire();
+		}
+		
+		return avancement;
 	}
 	
 	/**** PRIVATE ****/
