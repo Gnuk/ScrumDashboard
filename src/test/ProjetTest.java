@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import model.Projet;
 import model.Projet.Etat;
 import model.UserStory;
+import model.UserStory.EtatUserStory;
 
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void constructeurNormalTest() throws Exception {
+	public void testConstructeurNormal() throws Exception {
 		Projet p;
 		p = new Projet("refonte de l'interface graphique", 400f);
 
@@ -32,7 +33,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void constructeurNomVideTest() throws Exception {
+	public void testConstructeurNomVide() throws Exception {
 		new Projet("", 400f);
 	}
 
@@ -40,7 +41,7 @@ public class ProjetTest {
 	 * Test le constructeur si le nom passé est null
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void constructeurNomNullTest() throws Exception {
+	public void testConstructeurNomNull() throws Exception {
 		new Projet(null, 400f);
 	}
 
@@ -50,7 +51,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void ajouterStoryNormalTest() throws Exception {
+	public void testAjouterStoryNormal() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
 		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
@@ -69,7 +70,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void ajouterStoryDoublonTest() throws Exception {
+	public void testAjouterStoryDoublon() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
 		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
@@ -87,7 +88,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void calculerAvancementNormalTest() throws Exception {
+	public void testCalculerAvancementNormal() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
 		UserStory storyTunnel = new UserStory("refonte du tunnel d'achat", 50);
@@ -114,7 +115,7 @@ public class ProjetTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void fermerProjetRAFNullTest() throws Exception {
+	public void testVerifierRAFNull() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
 		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
@@ -130,5 +131,49 @@ public class ProjetTest {
 
 	}
 
-	// Calculer charge totale
+
+	/**
+	 * Test qui calcul la charge total du projet
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testCalculerChargeTotaleNormal() throws Exception {
+		Projet p = new Projet("refonte de l'interface graphique", 400f);
+
+		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
+		UserStory story2 = new UserStory("refonte du tunnel d'achat bis", 40);
+
+		p.ajouterStory(story);
+		p.ajouterStory(story2);
+
+		assertTrue(p.calculerChargeTotale() == 80);
+	}
+	
+	/**
+	 * Test qui calcul la charge total du projet, en faisant attention de ne compter que les tache plannifiees
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testCalculerChargeTotalePlannifiee() throws Exception {
+		Projet p = new Projet("refonte de l'interface graphique", 400f);
+
+		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
+		UserStory story2 = new UserStory("refonte du tunnel d'achat bis", 40);
+		UserStory story3 = new UserStory("refonte du tunnel d'achat bis bis", 40);
+
+		p.ajouterStory(story);
+		p.ajouterStory(story2);
+		p.ajouterStory(story3);
+		
+
+		assertTrue(p.calculerChargeTotale() == 120);
+		
+		story2.setEtatUserStory(EtatUserStory.NOUVELLE);		
+		assertTrue(p.calculerChargeTotale() == 80);
+		
+		story3.setEtatUserStory(EtatUserStory.FERMEE);		
+		assertTrue(p.calculerChargeTotale() == 40);
+	}
 }
