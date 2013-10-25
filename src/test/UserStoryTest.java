@@ -4,42 +4,80 @@ import static org.junit.Assert.*;
 import junit.framework.Assert;
 import model.Projet;
 import model.UserStory;
+import model.UserStory.EtatUserStory;
 
 import org.junit.Test;
 
 public class UserStoryTest {
 
 	@Test
-	public void testCreerUserStory() {
-		Projet p = new Projet("Refonte de l'interface pour tablettes",100);
-		p.ajouterStory(new UserStory("refonte du tunnel d'achat", 40));
-		for(UserStoryTest us : p.stories){
-			
+	public void testCreerUserStoryPlanifiee() {
+		try {
+			Projet p = new Projet("Refonte de l'interface pour tablettes",100);
+			UserStory us = new UserStory("refonte du tunnel d'achat", 40);
+			boolean trouvee = false;
+			p.ajouterStory(us);
+			for(UserStory usList : p.getStories()){
+				if(usList == us){
+					trouvee = true;
+					assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
+				}
+			}
+			assertTrue(trouvee);
+		} catch (Exception e) {
+			fail("Test creer user story planifiee");
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCreerUserStoryNonPlanifiee() {
+		try {
+			Projet p = new Projet("Refonte de l'interface pour tablettes",100);
+			UserStory us = new UserStory("refonte du tunnel d'achat", 0);
+			p.ajouterStory(us);
+			boolean trouvee = false;
+			for(UserStory usList : p.getStories()){
+				if(usList == us){
+					trouvee = true;
+					assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
+				}
+			}
+			assertTrue(trouvee);
+		} catch (Exception e) {
+			fail("Test creer user story non planifiee");
+			e.printStackTrace();
 		}
 	}
 	
 	@Test
 	public void testNomNull(){
-		Throwable caught = null;
 		try {
 		   UserStory us = new UserStory(null, 40);
-		} catch (Throwable t) {
-		   caught = t;
+		   fail("nom null");
+		} 
+		catch (Throwable t) {
 		}
-		assertNotNull(caught);
-		assertSame(Exception.class, caught.getClass());
 	}
 	
 	@Test
 	public void testNomVide(){
-		Throwable caught = null;
 		try {
-		   UserStory us = new UserStory("", 40);
-		} catch (Throwable t) {
-		   caught = t;
-		}
-		assertNotNull(caught);
-		assertSame(Exception.class, caught.getClass());
+			   UserStory us = new UserStory(null, 40);
+			   fail("nom vide");
+			} 
+		catch (Throwable t) {
+			}
+	}
+	
+	@Test
+	public void testRAFCharge(){
+		try {
+			   UserStory us = new UserStory(null, 40);
+			   assertTrue(us.getCharge() == us.getResteAFaire());
+			} 
+		catch (Throwable t) {
+			}
 	}
 
 }
