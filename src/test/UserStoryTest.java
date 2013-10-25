@@ -1,8 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
-import model.Projet;
+import static org.junit.Assert.assertTrue;
 import model.UserStory;
 import model.UserStory.EtatUserStory;
 
@@ -24,12 +22,12 @@ public class UserStoryTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNomNull() throws Exception {
-		UserStory us = new UserStory(null, 40);
+		new UserStory(null, 40);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNomVide() throws Exception {
-		UserStory us = new UserStory(null, 40);
+		new UserStory(null, 40);
 	}
 
 	@Test
@@ -38,15 +36,16 @@ public class UserStoryTest {
 				40);
 		assertTrue(us.getCharge() == us.getResteAFaire());
 	}
-	
+
 	@Test
 	public void testChangeRAFUsPlanifiee() throws Exception {
-		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 40);
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes",
+				40);
 		assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
 		us.setResteAFaire(0);
 		assertTrue(us.getEtatUserStory() == EtatUserStory.FERMEE);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testChangeRAFUsNouvelle() throws Exception {
 		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 0);
