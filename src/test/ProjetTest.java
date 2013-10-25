@@ -9,33 +9,34 @@ public class ProjetTest {
 
 	/**
 	 * Test le constructeur avec des paramètres conformes à ceux attendus
+	 * 
+	 * @throws Exception
 	 */
 	@Test
-	public void constructeurNormalTest() {
+	public void constructeurNormalTest() throws Exception {
 		Projet p;
-		
-		try {
-			p = new Projet("refonte de l'interface graphique", 400f);
-			
-			assertTrue(p.getEtat() == Projet.Etat.OUVERT);
-			assertFalse(p.getNom() == null);
-			assertFalse("".equals(p.getNom()));
-		} catch (Exception e) { }
+		p = new Projet("refonte de l'interface graphique", 400f);
+
+		assertTrue(p.getEtat() == Projet.Etat.OUVERT);
+		assertFalse(p.getNom() == null);
+		assertFalse("".equals(p.getNom()));
 	}
 
 	/**
-	 * Test le constructeur si le nom passé est vide ou null
+	 * Test le constructeur si le nom passé est vide
+	 * 
+	 * @throws Exception
 	 */
-	@Test
-	public void constructeurNomVideTest() {
-		try {
-			Projet p = new Projet("", 400f);
-			fail("Nom vide interdit");
-		} catch (Exception e) { }
-		
-		try {
-			Projet p = new Projet(null, 400f);
-			fail("Nom null interdit");
-		} catch (Exception e) { }
+	@Test(expected = IllegalArgumentException.class)
+	public void constructeurNomVideTest() throws IllegalArgumentException {
+		Projet p = new Projet("", 400f);
+	}
+
+	/**
+	 * Test le constructeur si le nom passé est null
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void constructeurNomNullTest() throws IllegalArgumentException {
+		Projet p = new Projet(null, 400f);
 	}
 }

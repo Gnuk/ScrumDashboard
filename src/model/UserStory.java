@@ -1,7 +1,7 @@
 package model;
 
 public class UserStory {
-	private String name;
+	private String nom;
 	private double resteAFaire;
 	private double charge;
 	public enum EtatUserStory{
@@ -12,11 +12,11 @@ public class UserStory {
 	}
 	private EtatUserStory etatUserStory;
 	
-	public String getName() {
-		return name;
+	public String getNom() {
+		return nom;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 	public double getResteAFaire() {
 		return resteAFaire;
@@ -31,20 +31,20 @@ public class UserStory {
 		this.charge = charge;
 	}
 	
-	public UserStory(String name, double charge)
-			throws Exception
+	public UserStory(String nom, double charge)
+			throws IllegalArgumentException
 	{
-		if(name != null && !name.equals("")){
+		if(nom != null && !nom.equals("")){
 			if(charge > 0){
 				this.setEtatUserStory(EtatUserStory.PLANIFIEE);
 			}else{
 				this.setEtatUserStory(EtatUserStory.NOUVELLE);
 			}
 			this.setCharge(charge);
-			this.setName(name);
+			this.setNom(nom);
 			this.setResteAFaire(charge);
 		}else{
-			throw new Exception("Nom ne doit pas être null");
+			throw new IllegalArgumentException("Nom ne doit pas être null");
 		}
 	}
 
