@@ -38,5 +38,20 @@ public class UserStoryTest {
 				40);
 		assertTrue(us.getCharge() == us.getResteAFaire());
 	}
-
+	
+	@Test
+	public void changeRAFUsPlanifiee() throws Exception {
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 40);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
+		us.setResteAFaire(0);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.FERMEE);
+	}
+	
+	@Test
+	public void changeRAFUsNouvelle() throws Exception {
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 0);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
+		us.setResteAFaire(10);
+		assertTrue(us.getResteAFaire() == 0);
+	}
 }

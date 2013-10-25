@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 import model.Projet;
+import model.Projet.Etat;
 import model.UserStory;
 
 import org.junit.Test;
@@ -59,7 +60,7 @@ public class ProjetTest {
 		assertTrue(nbStories+1 == p.getStories().size());
 		assertEquals(story, p.getStories().get(0));
 	}
-	
+
 	/**
 	 * Test ajouterStory dans les conditions normales
 	 * 
@@ -75,5 +76,25 @@ public class ProjetTest {
 		p.ajouterStory(story);
 		// Le nom de story2 est identique a story, on attend une illegalArgumentException
 		p.ajouterStory(story2);
+	}
+	/**
+	 * Test qui ferme le projet si les RAF de toutes les US == 0
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void fermerProjetRAFNull() throws Exception {
+		Projet p = new Projet("refonte de l'interface graphique", 400f);
+		
+		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
+		UserStory story2 = new UserStory("refonte du tunnel d'achat bis", 40);
+		
+		p.ajouterStory(story);
+		p.ajouterStory(story2);
+		
+		story.setResteAFaire(0);
+		assertTrue(p.getEtat() == Etat.OUVERT);
+		story2.setResteAFaire(0);
+		assertTrue(p.getEtat() == Etat.FERME);
 	}
 }
