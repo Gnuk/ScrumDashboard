@@ -12,32 +12,14 @@ public class UserStoryTest {
 
 	@Test
 	public void testCreerUserStoryPlanifiee() throws Exception {
-		Projet p = new Projet("Refonte de l'interface pour tablettes", 100);
 		UserStory us = new UserStory("refonte du tunnel d'achat", 40);
-		boolean trouvee = false;
-		p.ajouterStory(us);
-		for (UserStory usList : p.getStories()) {
-			if (usList == us) {
-				trouvee = true;
-				assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
-			}
-		}
-		assertTrue(trouvee);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
 	}
 
 	@Test
 	public void testCreerUserStoryNonPlanifiee() throws Exception {
-		Projet p = new Projet("Refonte de l'interface pour tablettes", 100);
 		UserStory us = new UserStory("refonte du tunnel d'achat", 0);
-		p.ajouterStory(us);
-		boolean trouvee = false;
-		for (UserStory usList : p.getStories()) {
-			if (usList == us) {
-				trouvee = true;
-				assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
-			}
-		}
-		assertTrue(trouvee);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

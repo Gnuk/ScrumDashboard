@@ -1,6 +1,8 @@
 package model;
 
-public class UserStory {
+import java.util.Observable;
+
+public class UserStory extends Observable{
 	private String nom;
 	private double resteAFaire;
 	private double charge;
@@ -21,8 +23,14 @@ public class UserStory {
 	public double getResteAFaire() {
 		return resteAFaire;
 	}
-	public void setResteAFaire(double resteAFaire) {
-		this.resteAFaire = resteAFaire;
+	public void setResteAFaire(double resteAFaire){
+		if(this.getEtatUserStory() == EtatUserStory.PLANIFIEE && resteAFaire>=0){
+			this.resteAFaire = resteAFaire;
+			this.notifyObservers();
+			if(this.getResteAFaire() == 0){
+				this.setEtatUserStory(EtatUserStory.FERMEE);
+			}
+		}
 	}
 	public double getCharge() {
 		return charge;
