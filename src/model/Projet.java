@@ -14,9 +14,9 @@ public class Projet {
 	private Etat etat;
 	private ArrayList<UserStory> stories;
 	
-	public Projet(String nom, double budget) throws Exception {
+	public Projet(String nom, double budget) throws IllegalArgumentException {
 		if (nom == null || "".equals(nom))
-			throw new Exception("Le nom n'est pas conforme");
+			throw new IllegalArgumentException("Le nom n'est pas conforme");
 		
 		this.nom = nom;
 		this.budget = budget;
@@ -26,9 +26,22 @@ public class Projet {
 	}
 	
 	public void ajouterStory(UserStory story) {
-		this.stories.add(story);
+		// pas de doublon
+		if (!isStoryAlreadyExisting(story))
+			this.stories.add(story);
+		else
+			throw new IllegalArgumentException("Le nom de la story est déjà attribué");
 	}
 	
+	/**** PRIVATE ****/
+	
+	private boolean isStoryAlreadyExisting(UserStory newStory) throws IllegalArgumentException {
+		for (UserStory story : stories) {
+			if ( story.getNom().equals(newStory.getNom()))
+				return true;
+		}
+		return false;
+	}
 	
 	
 	/**** GETTERS & SETTERS *****/
