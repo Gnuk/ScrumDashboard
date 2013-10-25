@@ -70,7 +70,7 @@ public class ProjetTest {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 		
 		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
-		UserStory story2 = new UserStory("refonte du tunnel d'achat", 40);
+		UserStory story2 = new UserStory("refonte du tunnel d'achat", 50);
 		
 		p.ajouterStory(story);
 		// Le nom de story2 est identique a story, on attend une illegalArgumentException

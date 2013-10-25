@@ -26,11 +26,17 @@ public class Projet {
 	}
 	
 	public void ajouterStory(UserStory story) {
-		// pas de doublon
 		if (!isStoryAlreadyExisting(story))
 			this.stories.add(story);
 		else
 			throw new IllegalArgumentException("Le nom de la story est déjà attribué");
+	}
+	
+	public double calculerAvancement() {
+		for (UserStory story : stories) {
+			
+		}
+		return 1f;
 	}
 	
 	/**** PRIVATE ****/
