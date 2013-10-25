@@ -23,12 +23,12 @@ public class UserStoryTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNomNull() throws IllegalArgumentException {
+	public void testNomNull() throws Exception {
 		UserStory us = new UserStory(null, 40);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNomVide() throws IllegalArgumentException {
+	public void testNomVide() throws Exception {
 		UserStory us = new UserStory(null, 40);
 	}
 
