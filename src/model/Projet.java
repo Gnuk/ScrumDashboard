@@ -37,10 +37,13 @@ public class Projet implements Observer{
 	}
 	
 	public double calculerAvancement() {
+		double avancement = 0f;
+		
 		for (UserStory story : stories) {
-			
+			avancement += story.getResteAFaire();
 		}
-		return 1f;
+		
+		return avancement;
 	}
 	
 	/**** PRIVATE ****/
