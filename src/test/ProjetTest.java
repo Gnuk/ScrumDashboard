@@ -113,7 +113,8 @@ public class ProjetTest {
 	 * 
 	 * @throws Exception
 	 */
-	public void fermerProjetRAFNull() throws Exception {
+	@Test
+	public void fermerProjetRAFNullTest() throws Exception {
 		Projet p = new Projet("refonte de l'interface graphique", 400f);
 
 		UserStory story = new UserStory("refonte du tunnel d'achat", 40);
@@ -126,6 +127,7 @@ public class ProjetTest {
 		assertTrue(p.getEtat() == Etat.OUVERT);
 		story2.setResteAFaire(0);
 		assertTrue(p.getEtat() == Etat.FERME);
+
 	}
 
 	// Calculer charge totale

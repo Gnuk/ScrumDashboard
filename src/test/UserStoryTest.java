@@ -1,8 +1,6 @@
 package test;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
-import model.Projet;
+import static org.junit.Assert.assertTrue;
 import model.UserStory;
 import model.UserStory.EtatUserStory;
 
@@ -24,12 +22,12 @@ public class UserStoryTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNomNull() throws Exception {
-		UserStory us = new UserStory(null, 40);
+		new UserStory(null, 40);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testNomVide() throws Exception {
-		UserStory us = new UserStory(null, 40);
+		new UserStory(null, 40);
 	}
 
 	@Test
@@ -38,20 +36,22 @@ public class UserStoryTest {
 				40);
 		assertTrue(us.getCharge() == us.getResteAFaire());
 	}
-	
+
 	@Test
-	public void changeRAFUsPlanifiee() throws Exception {
-		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 40);
+	public void testChangeRAFUsPlanifiee() throws Exception {
+		UserStory us = new UserStory("Refonte de l'interface pour tablettes",
+				40);
 		assertTrue(us.getEtatUserStory() == EtatUserStory.PLANIFIEE);
 		us.setResteAFaire(0);
 		assertTrue(us.getEtatUserStory() == EtatUserStory.FERMEE);
 	}
-	
-	@Test
-	public void changeRAFUsNouvelle() throws Exception {
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testChangeRAFUsNouvelle() throws Exception {
 		UserStory us = new UserStory("Refonte de l'interface pour tablettes", 0);
 		assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
 		us.setResteAFaire(10);
 		assertTrue(us.getResteAFaire() == 0);
+		assertTrue(us.getEtatUserStory() == EtatUserStory.NOUVELLE);
 	}
 }
