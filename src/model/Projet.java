@@ -1,8 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Projet {
+public class Projet implements Observer{
 
 	public enum Etat {
 		OUVERT,
@@ -27,8 +29,10 @@ public class Projet {
 	
 	public void ajouterStory(UserStory story) {
 		// pas de doublon
-		if (!isStoryAlreadyExisting(story))
+		if (!isStoryAlreadyExisting(story)){
+			story.addObserver(this);
 			this.stories.add(story);
+		}
 		else
 			throw new IllegalArgumentException("Le nom de la story est déjà attribué");
 	}
@@ -73,5 +77,15 @@ public class Projet {
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
+	}
+
+	public void verifierRAF(){
+		if(this.calculerAvancement() == 0)
+			this.setEtat(Etat.FERME);
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		verifierRAF();
 	}
 }
